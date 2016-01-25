@@ -1,0 +1,8 @@
+---
+name: htmlblocks
+---
+HTMLBlocks:
+  cache: true
+Page:
+  extensions:
+    - HTMLBlockPageExtension

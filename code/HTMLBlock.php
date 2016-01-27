@@ -14,7 +14,11 @@ class HTMLBlock extends DataObject {
   );
   static $db = array(
     'CodeID'=>'Varchar',
-    'HTML'=>'HTMLText'
+    'HTML'=>'HTMLText',
+    'disableEditor'=>'Boolean'
+  );
+  static $defaults = array(
+    'disableEditor' => true
   );
   public function getCode() {
     return '{$HTMLBlock('."'$this->CodeID'".')}';
@@ -24,12 +28,30 @@ class HTMLBlock extends DataObject {
     $cachekey = preg_replace("/[^a-z]/", "", $id);
     if (!($result = $cache->load($cachekey))) {
       $do = DataObject::get_one('HTMLBlock', "CodeID = '$id'");
-      $result = $do->forTemplate();
-      $cache->save($result, $cachekey);
+      if ($do) {
+        $result = $do->forTemplate();
+        $cache->save($result, $cachekey);
+      } else {
+        return '<pre>No HTMLBlock in database for code <u>'.$id.'</u></pre>';
+      }
     }
-    return $result;
+    if ($result) {
+      return $result;
+    } else {
+      return '<pre>No HTMLBlock in database for code <u>'.$id.'</u></pre>';
+    }
   }
   public function forTemplate() {
     return DBField::create_field('HTMLText', $this->HTML)->forTemplate();
+  }
+  public function getCMSFields() {
+    $fields = parent::getCMSFields();
+    if ($this->disableEditor) {
+      $tfa = new TextareaField('HTML');
+      $tfa->setRows(30);
+      $tfa->setColumns(150);
+      $fields->addFieldToTab('Root.Main', $tfa);
+    }
+    return $fields;
   }
 }

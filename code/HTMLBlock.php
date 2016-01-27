@@ -20,10 +20,16 @@ class HTMLBlock extends DataObject {
     return '{$HTMLBlock('."'$this->CodeID'".')}';
   }
   public static function getBlockByID($id){
-    /** TODO add caching  */
-    return DataObject::get_one('HTMLBlock', "CodeID = '$id'");
+    $cache = SS_Cache::factory('HTMLBlocks');
+    $cachekey = preg_replace("/[^a-z]/", "", $id);
+    if (!($result = $cache->load($cachekey))) {
+      $do = DataObject::get_one('HTMLBlock', "CodeID = '$id'");
+      $result = $do->forTemplate();
+      $cache->save($result, $cachekey);
+    }
+    return $result;
   }
   public function forTemplate() {
-    return $this->HTML;
+    return DBField::create_field('HTMLText', $this->HTML)->forTemplate();
   }
 }

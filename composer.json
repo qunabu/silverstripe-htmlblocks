@@ -1,0 +1,17 @@
+{
+	"name": "qunabu/silverstripe-htmlblocks",
+	"description": "A skeleton for SilverStripe modules.",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "CMS"],
+	"license": "BSD-3-Clause",
+	"minimum-stability": "dev",
+	"authors": [
+		{
+			"name": "Mateusz Wojczal",
+			"homepage": "http://qunabu.com"
+		}
+	],
+	"extra": {
+		"installer-name": "qunabu"
+	}
+}

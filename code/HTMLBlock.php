@@ -30,7 +30,11 @@ class HTMLBlock extends DataObject {
       $do = DataObject::get_one('HTMLBlock', "CodeID = '$id'");
       if ($do) {
         $result = $do->forTemplate();
-        $cache->save($result, $cachekey);
+        if ($result) {
+          $cache->save($result, $cachekey);
+        } else {
+          return '<pre>No HTMLBlock in database for code <u>'.$id.'</u></pre>';
+        }
       } else {
         return '<pre>No HTMLBlock in database for code <u>'.$id.'</u></pre>';
       }

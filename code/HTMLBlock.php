@@ -41,6 +41,9 @@ class HTMLBlock extends DataObject {
       return '<pre>No HTMLBlock in database for code <u>'.$id.'</u></pre>';
     }
   }
+  public function exists($id) {
+    return isset(DataObject::get_one('HTMLBlock', "CodeID = '$id'"));
+  }
   public function forTemplate() {
     return DBField::create_field('HTMLText', $this->HTML)->forTemplate();
   }

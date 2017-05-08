@@ -41,7 +41,7 @@ class HTMLBlock extends DataObject {
       return '<pre>No HTMLBlock in database for code <u>'.$id.'</u></pre>';
     }
   }
-  public function exists($id) {
+  public static function doesExists($id) {
     $block = DataObject::get_one('HTMLBlock', "CodeID = '$id'") ;
     return isset( $block );
   }

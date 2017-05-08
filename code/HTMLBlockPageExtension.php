@@ -11,4 +11,8 @@ class HTMLBlockPageExtension extends DataExtension {
   public function HTMLBlock($id) {
     return HTMLBlock::getBlockByID($id);
   }
+
+  public function HTMLBlockExist($id) {
+    return HTMLBlock::doesExists($id);
+  }
 }

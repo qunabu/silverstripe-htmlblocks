@@ -10,8 +10,5 @@
 			"name": "Mateusz Wojczal",
 			"homepage": "http://qunabu.com"
 		}
-	],
-	"extra": {
-		"installer-name": "qunabu"
-	}
+	]
 }

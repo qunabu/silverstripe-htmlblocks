@@ -25,7 +25,8 @@ class HTMLBlock extends DataObject {
   }
   public static function getBlockByID($id){
     $cache = SS_Cache::factory('HTMLBlocks');
-    $cachekey = preg_replace("/[^a-z0-9]/", "", $id);
+    //$cachekey = preg_replace("/[^a-z0-9]/", "", $id);
+    $cachekey = md5($id);
     if (!($result = $cache->load($cachekey))) {
       $do = DataObject::get_one('HTMLBlock', "CodeID = '$id'");
       if ($do) {

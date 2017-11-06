@@ -5,6 +5,9 @@
 	"keywords": ["silverstripe", "CMS"],
 	"license": "BSD-3-Clause",
 	"minimum-stability": "dev",
+    "require": {
+        "sheadawson/silverstripe-shortcodable": "3.0.x-dev"
+    },
 	"authors": [
 		{
 			"name": "Mateusz Wojczal",

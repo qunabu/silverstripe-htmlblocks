@@ -7,11 +7,15 @@
  */
 
 class HTMLBlock extends DataObject {
+    
   static $singular_name = 'HTMLBlock';
+    
   static $plural_name = 'HTMLBlocks';
+    
   static $summary_fields = array(
-    'ID','CodeID','Code','HTML.Summary'
+    'ID','CodeID','Code','ShortCode','HTML.Summary'
   );
+    
   static $db = array(
     'CodeID'=>'Varchar',
     'HTML'=>'HTMLText',
@@ -23,6 +27,11 @@ class HTMLBlock extends DataObject {
   public function getCode() {
     return '{$HTMLBlock('."'$this->CodeID'".')}';
   }
+
+  public function getShortCode() {
+    return '{$HTMLBlock('."'$this->ID'".')}';
+  }
+    
   public static function getBlockByID($id){
     $cache = SS_Cache::factory('HTMLBlocks');
     //$cachekey = preg_replace("/[^a-z0-9]/", "", $id);
@@ -63,4 +72,34 @@ class HTMLBlock extends DataObject {
     }
     return $fields;
   }
+
+  /**
+     * Parse the shortcode and render as a string, probably with a template
+     * @param array $attributes the list of attributes of the shortcode
+     * @param string $content the shortcode content
+     * @param ShortcodeParser $parser the ShortcodeParser instance
+     * @param string $shortcode the raw shortcode being parsed
+     * @return String
+     **/
+    public static function parse_shortcode($attributes, $content, $parser, $shortcode)
+    {
+      
+        // check the gallery exists
+        if (isset($attributes['id']) && $gallery = HTMLBlock::get()->byID($attributes['id'])) {
+           return HTMLBlock::get()->byID($attributes['id'])->forTemplate();
+        }
+
+    }
+
+    public function getShortcodableRecords() {
+	    return HTMLBlock::get()->map()->toArray();
+    }
+
+    public function onAfterWrite() {
+      $cache = SS_Cache::factory('HTMLBlocks');
+      $cache->clean();
+      $cachekey = md5($this->CodeID);
+      parent::onAfterWrite();
+    }
+
 }

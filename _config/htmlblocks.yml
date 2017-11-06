@@ -6,3 +6,12 @@ HTMLBlocks:
 Page:
   extensions:
     - HTMLBlockPageExtension
+Shortcodable:
+  # essential - classes that your want to be shortcodable
+  shortcodable_classes:
+    - HTMLBlock
+  # optional - additional htmleditorfields
+  htmleditor_names:
+    - cwp   
+HTMLBlock:
+  shortcodable_is_block: true
